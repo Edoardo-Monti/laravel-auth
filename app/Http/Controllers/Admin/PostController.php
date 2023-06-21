@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Model\Admin\Post;
+use App\Models\Admin\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -17,7 +17,7 @@ class PostController extends Controller
     {
         $posts = Post::all();
 
-        return view('admin.posts.index', compact('$posts'));
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
