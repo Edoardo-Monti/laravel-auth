@@ -5,15 +5,20 @@
 <div class="container">
     <div class="row mx-auto g-4">
         @foreach ($posts as $elem)
-        <div class="card mx-auto" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">{{$elem->title}}</h5>
-                <p class="card-text">{{$elem->description}}</p>
-                <a href="#" class="btn btn-primary">Modifica</a>
-                <a href="#" class="btn btn-primary">Elimina</a>
+        <a href="{{ route('admin.posts.show',$elem)}}">
+            <div class="card mx-auto" style="width: 18rem;">
+                <img src="" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">{{$elem->title}}</h5>
+                    <p class="card-text">{{$elem->description}}</p>
+                    <form action="{{route('admin.posts.destroy', $elem)}}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-warning btn-delete">Elimina</button>
+                    </form>
+                </div>
             </div>
-        </div>
+        </a>
         @endforeach
     </div>
 </div>
