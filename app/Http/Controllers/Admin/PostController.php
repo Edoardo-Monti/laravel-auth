@@ -27,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -38,10 +38,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate(
+            [
+                'title' => 'required|max:255',
+                'description' => 'required|min:10',
+                'slug' => 'required'
+                
+            ],
+            [
+                'title.required' => 'è richiesto di compilare il campo title',
+                'title.max' => 'il titolo deve contenere al massimo 255 caratteri',
+                'title.unique' => 'Il titolo è gia stato utilizzato',
+                'description.required' => 'è richiesto di compilare il campo title',
+                'description.min' => 'il testo troppo corto per essere inserito',
+
+            ],
+        );
+
         $form_data = $request->all();
 
-        $newPost = new Comic();
+        $newPost = new Post();
         $newPost->fill($form_data);
+
         $newPost->save();
         return redirect()->route( 'admin.posts.index');
     }
@@ -78,6 +97,23 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
+        $request->validate(
+            [
+                'title' => 'required|max:255',
+                'description' => 'required|min:10',
+                
+            ],
+            [
+                'title.required' => 'è richiesto di compilare il campo title',
+                'title.max' => 'il titolo deve contenere al massimo 255 caratteri',
+                'title.unique' => 'Il titolo è gia stato utilizzato',
+                'description.required' => 'è richiesto di compilare il campo title',
+                'description.min' => 'il testo troppo corto per essere inserito',
+
+            ],
+        );
+
         $form_data = $request->all();
 
         $post->update($form_data);
